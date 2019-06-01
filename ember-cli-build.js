@@ -7,13 +7,23 @@ module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     postcssOptions: {
       compile: {
-        plugins: [{
+        plugins: [
+          {
             module: require('postcss-import'),
             options: {
               path: ['node_modules']
             }
           },
-          require("tailwindcss")("./config/tailwind.config.js")
+          require("tailwindcss")("./config/tailwind.config.js"),
+          {
+            module: require('@fullhuman/postcss-purgecss'),
+            options: {
+              content: [
+                // extra paths here probably needed for components/controllers etc
+                './app/templates/**/*.hbs'
+              ]
+            }
+          }
         ]
       }
     }
